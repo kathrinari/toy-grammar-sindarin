@@ -1,0 +1,156 @@
+### testsuite_sindarin_betzenbichler.lfg
+
+###
+### verbless sentences 
+###
+
+#verbless sentences with only a subject-NP
+
+yrch
+
+bair
+
+Perhael
+
+#number-agreement for adjectives modifying nouns (verbless)
+
+mair duir 
+
+rath dínen 
+
+#verbless sentence: NP with participle verb used adverbially
+
+aew cabel 
+
+#verbless sentence with only an AP (with adverb)
+
+mae govannen
+
+#verbless NP with PP 
+
+naur dan i ngaurhoth
+
+###
+### verbal sentences 
+###
+
+#intransitive with pronoun as subject-NP and agreeing verb 
+
+cebin im 
+
+#intransitive prodrop one-word sentence (verb only) 
+
+cebin 
+
+#transitive prodrop with NP as object 
+
+naron i edhel 
+
+naron edhel
+
+#transitive prodrop with pronoun as object (OV structure)
+
+mín narar
+
+#transitive with pronoun as object and NP as subject (OVS structure)
+
+mín nara benn 
+
+#subject-verb agreement
+
+câb aew
+
+ista benn lind 
+
+#prodrop sentence with participle 
+
+cened i aew cabel 
+
+#sentence with subject and object participle 
+
+ista edhel narol aew cabel 
+
+#past participle (with number agreement) 
+
+ista eryd dolin 
+
+#number-agreement for adjectives modifying nouns with verbal sentence
+
+cened eryd gelin 
+
+#two adjectives attached to NP in a verbal sentence
+
+reniam i rath daer dínen
+
+#three adjectives attached to NP in a verbal sentence
+
+reniam i rath daer dínen dur 
+
+#AP with adverb attached to NP in a verbal sentence 
+
+cened i rhîw him ring
+
+#PP following NP 
+
+cened i edhel am yrn
+
+#PP attached to NP and additional APs for each NP
+
+cened i edhel dínen am yrn gelin 
+
+#dative-pronoun PP attached to VP
+
+glîr anim
+
+#dative-pronoun PP attached to NP 
+
+maethar yrch anim
+
+#accusative pronoun-PP attached to NP
+
+maethar yrch ad mín 
+
+#past tense with prodrop
+
+sungem
+
+#past tense with prodrop and object 
+
+sungem i nên 
+
+#past tense with a proper noun as subject and object
+
+teithant Celebrimbor i thiw
+
+
+###
+### the following sentences should not be parseable  
+###
+
+#false sentence structure
+
+aew câb
+
+#false sentence structure: pronouns should only be allowed first position if accusative
+
+im cebin 
+
+#false agreement of pronoun and verb 
+
+cebim im
+
+#false verb-subject-agreement
+
+mín narar benn 
+
+#OVS sentence with a pronoun as object but additional object on "usual" position
+
+mín nara benn edhel
+
+#false number agreement adjective-noun
+
+eryd galen 
+
+#false number agreement for participle 
+
+ista eryd dolen

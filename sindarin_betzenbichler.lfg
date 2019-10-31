@@ -1,0 +1,442 @@
+TOY   SINDARIN   CONFIG (1.0)
+  ROOTCAT   S. 
+  FILES .
+  LEXENTRIES   (TOY SINDARIN).
+  TEMPLATES (TOY SINDARIN).  
+  RULES   (TOY SINDARIN).
+  MORPHOLOGY .
+  GOVERNABLERELATIONS    SUBJ OBJ OBJ2 COMP XCOMP OBL OBL-?+.
+  SEMANTICFUNCTIONS    ADJUNCT  TOPIC FOCUS POSS STANDARD.
+  NONDISTRIBUTIVES    NUM PERS CONJ-FORM.
+  EPSILON   e.
+  OPTIMALITYORDER NOGOOD +PPattach +NPsoft.
+  GENOPTIMALITYORDER NOGOOD .
+
+ 
+----
+TOY SINDARIN RULES (1.0) 
+
+	
+	S --> { Verbless | Verbal }. 
+	
+	Verbless --> e: @(OPT-TRANS be); 	"verbless sentences with dummy-verb"
+				 e: (^ SUBJ PRED)='pron' "dummy-pronoun 3sg as subject"
+					(^ SUBJ NUM)=sg
+					(^ SUBJ PERS)=3
+					(^ CASE)=nom;
+				{NP: (^ OBJ)=!
+					(! CASE)=acc
+				| AP: ! $ (^ ADJUNCT) 	"an AP can stand without a noun as head in verbless sentences"
+				}. 
+				
+	
+	Verbal --> 	VP: ^=!.		"sentences may consist only of a VP"
+
+				
+	VP --> 	(PRON: (^ OBJ)=! 	"reflects OV(S) structure of VPs with pronoun as object"
+				(! CASE)=acc)
+			V: ^=!;
+			(NP: (^ SUBJ)=!		"usually we have VS(O) structure" 
+				(! CASE)=nom)
+			{ (NP: (^ OBJ)=!	"either normal NP"
+				(! CASE)=acc) 
+			| (NP: (^ OBJ)=!	"or NP with a noun marked as soft mutation"
+				(! CASE)=acc
+				(! MUT) =c soft		
+				@(OT-MARK NPsoft))	"prefer NPs with a noun marked as soft mutation"
+			}
+			(PP). "dative-pronoun PPs can occur after a verb"
+
+
+	NP --> {(DET)
+			N
+			AP*: ! $ (^ ADJUNCT)
+				@NUM-AGR; 			"adjectives agree in number"
+			(VPART: ! $ (^ ADJUNCT)	"VPs are allowed inside an NP if it is a participle"
+				@NUM-AGR)			"past participles also have to agree in number"
+			PP*: ! $ (^ ADJUNCT)  
+				@(OT-MARK PPattach) "prefer PPs attached to NPs"
+			| PRON }. 
+			
+			
+	VPART --> V: ^=! 	
+			  { (! PARTICIPLE) =c pres 		"only participles"
+				| (! PARTICIPLE) =c past}. 
+			
+	AP --> {
+			{ (PP: ! $ (^ ADJUNCT)) | (ADV: ! $ (^ ADJUNCT)) }
+			A
+			| A 
+			{ (PP: ! $ (^ ADJUNCT)) | (ADV: ! $ (^ ADJUNCT)) }
+			}.	
+
+	PP -->  { P: ^=!;		"head of PP"
+				NP: (^ OBJ)=!
+					(! CASE)=acc
+			| e: @(PREP an); 
+				NP: (^ OBL-DAT)=! 	"special obl for dative pronouns"
+					(! NTYPE) =c pron
+					(! CASE)=dat
+			}.
+			
+		  
+		  
+---- 
+
+TOY SINDARIN TEMPLATES (1.0) 
+
+	OT-MARK(_mark) = "assigns an OT mark, from common templates"
+       _mark $ o::*.
+
+
+   PRODROP(SCHEMA) = { SCHEMA 
+		(^ PRODROP) = -
+	  | SCHEMA 
+		(^ PRODROP) = +
+		{(^ SUBJ NUM) =c sg 
+		| (^ SUBJ NUM) =c pl}
+		{(^ SUBJ PERS) =c 1 
+		| (^ SUBJ PERS) =c 2 
+		| (^ SUBJ PERS) =c 3}
+		(^ SUBJ PRED) = 'pron'}.
+   
+	TRANS(P) =  { @(PRODROP (^ PRED) = 'P<(^ SUBJ) (^ OBJ)>') 
+				| @(PRODROP (^ PRED) = 'P<(^ SUBJ) (^OBL-DAT)>') }.
+
+	INTRANS(P) = { @(PRODROP (^ PRED) = 'P<(^ SUBJ)>') 
+				| @(PRODROP (^ PRED) = 'P<(^ SUBJ) (^OBL-DAT)>') }.
+
+	OPT-TRANS(P) = { @(TRANS P) | @(INTRANS P) }. 
+
+   
+	PRED(P) = (^ PRED) = 'P'. 
+
+	TENSE(T) = (^ TENSE) = T.
+
+	MOOD(M) = (^ MOOD) = M.
+	
+	ASPECT(A) = (^ ASPECT) = A. 
+	
+	PART(PA) = (^ PARTICIPLE) = PA. 
+	
+	NUM(N) = (^ NUM) = N. 
+	
+	PERS(PE) = (^ PERS) = PE. 
+	
+	VPRES = @(TENSE pres) 
+		@(MOOD indicative). 
+		
+	VPAST = @(TENSE past) 
+		@(MOOD indicative). 
+		
+	
+	1SG = (^ SUBJ NUM) = sg 
+		(^ SUBJ PERS) = 1. 
+		
+	2SG = (^ SUBJ NUM) = sg
+		(^ SUBJ PERS) = 2. 
+		
+	3SG = (^ SUBJ NUM) = sg
+		(^ SUBJ PERS) = 3. 
+		
+	1PL = (^ SUBJ NUM) = pl 
+		(^ SUBJ PERS) = 1. 
+		
+	2PL = (^ SUBJ NUM) = pl 
+		(^ SUBJ PERS) = 2. 
+		
+	3PL = (^ SUBJ NUM) = pl
+		(^ SUBJ PERS) = 3. 
+		
+	PRON(P Z N T) = @(PRED P)
+		(^ PERS) = Z
+		(^ NUM) = N
+		(^ PRON-TYPE) = T
+		(^ NTYPE) = pron. 
+		
+	GEND(G) = (^ GENDER) = G. 
+	
+	CASE(C) = (^ CASE) = C.
+
+	DEF =  (^ DEF). 
+	
+	"count-noun template"
+	CN(P N) = @(PRED P)
+		(^ NUM) = N
+		(^ PERS) = 3
+		(^ NTYPE) = count. 
+				 
+	"mass-noun template"
+	MN(P) = @(PRED P) 
+		(^ PERS) = 3 
+		(^ NTYPE) = mass. 
+		
+	"proper-noun template" 
+	PN(P G) = @(PRED P)
+	  (^ GEND) = G
+	  (^ NUM) = sg
+	  (^ PERS) = 3.
+	  
+	NUM-AGR = (^ NUM) = (! NUM).   "for adjective and participle agreement" 
+	
+	PREP(P) = { (^ PRED) = 'P<(^OBJ)>' 
+				| (^ PREP) = P} .
+	
+	MUT(M) = (^ MUT) = M. 
+	
+	VFORM(F) = (^ VFORM) = F. 
+	
+---- 
+TOY SINDARIN LEXICON (1.0) 
+
+"proper nouns" 
+
+Celebrimbor N * @(PN Celebrimbor masc). 
+
+Perhael N * @(PN Perhael masc). "Samwise"
+
+Herdir N * @(PN Herdir masc). "master"
+
+
+"mass nouns" 
+
+nên N * @(MN nên). "water"
+
+
+"count nouns" 
+
+aew	  N * @(CN aew sg). "bird"  
+		
+edhel N * @(CN edhel sg). "elf"  
+		
+yrch N * @(CN orch pl). "orcs"  
+
+eryd N * @(CN ôr pl). "mountains" 
+
+thôr N * @(CN thôr sg). "eagle"
+
+lind N * @(CN lind sg). "song" 
+
+or N * @(CN or sg). "day"
+
+bair N * @(CN bar pl). "houses" 
+
+mair N * @(CN bar pl). "houses, nasal mutation"
+
+rath N * @(CN rath sg). "street" 
+
+benn N * @(CN benn sg). "man"
+
+venn N * @(CN benn sg)
+		@(MUT soft).
+
+yrn N * @(CN orn pl)
+		@(MUT soft). "trees" 
+
+naur N * @(CN naur sg). "fire"
+		
+ngaurhoth N * @(CN gaurhoth pl). "wolf-pack, nasal mutation" 
+
+rhîw N * @(CN rhîw sg). "winter"
+
+thiw N * @(CN têw pl). "letters" 
+
+
+		
+"pronouns" 
+
+im PRON * @(PRON im 1 sg pers)
+		 @(CASE nom). 
+
+hon PRON * @(PRON hon 3 sg pers)
+		@(CASE nom)
+		@(GEND masc). 
+
+hen PRON * @(PRON hen 3 sg pers)
+		@(CASE nom)
+		@(GEND fem). 
+
+han PRON * @(PRON han 3 sg pers) 
+		@(CASE nom)
+		@(GEND neut). 
+		
+e PRON * @(PRON e 3 sg pers) 
+		@(CASE nom). 	"general pronoun" 
+
+hyn PRON * @(PRON hyn 3 pl pers) 
+		@(CASE nom)
+		@(GEND masc). 
+
+hin PRON * @(PRON hin 3 pl pers) 
+		@(CASE nom)
+		@(GEND fem). 
+
+hain PRON * @(PRON hain 3 pl pers) 
+		@(CASE nom)
+		@(GEND neut). 
+		
+nin PRON * @(PRON nin 1 sg pers) 
+		@(CASE acc). 
+		
+mín PRON * @(PRON mín 1 pl pers) 
+		@(CASE acc). 
+		
+anim PRON * @(PRON anim 1 sg pers) 
+		@(CASE dat). 
+		
+le PRON * { @(PRON le 2 sg pers)
+			| @(PRON le 2 pl pers) } 
+		@(CASE dat). 
+
+ammen PRON * @(PRON ammen 1 pl pers) 
+		@(CASE dat). 
+		
+"verbs" 
+
+glîr V * @(OPT-TRANS gliri) "sing"
+		@VPRES 
+		@3SG. 
+
+cebin V * @(INTRANS cebi) "I leap" "i-stem"
+		@VPRES
+		@1SG.
+
+câb V * @(INTRANS cebi) 
+		@VPRES
+		@3SG.
+
+cebim V * @(INTRANS cebi) 
+		@VPRES
+		@1PL.
+
+cebir V * @(INTRANS cebi) 
+		@VPRES
+		@3PL.
+
+cabel V * @(PRED cabel) "leaping"
+		@VPRES
+		@(PART pres). 
+
+naron V * @(TRANS naro) "I tell" "a-stem" 
+		@VPRES
+		@1SG.
+
+nara V * @(TRANS naro) 
+		@VPRES
+		@3SG.
+
+naram V * @(TRANS naro) 
+		@VPRES
+		@1PL.
+
+narar V * @(TRANS naro) 
+		@VPRES
+		@3PL.
+
+narol V * @(PRED naro) "telling"
+		@VPRES
+		@(PART pres). 
+		
+ista V * @(OPT-TRANS isto) "he/she/it knows" "a-stem"
+		@VPRES 
+		@3SG. 
+
+istol V * @(PRED isto) 
+		@VPRES
+		@(PART pres). 
+
+cened V * @(TRANS ceni) "I see" "i-stem"  
+		@VPRES
+		@1SG.
+		
+reniam V * @(OPT-TRANS renio) "we wander" "a-stem" 
+		@VPRES 
+		@1PL. 
+		
+teithant V * @(OPT-TRANS teitha) "drew" 
+		@VPAST 
+		@3SG. 
+
+sungem V * @(OPT-TRANS sogo) "drank" 
+		@VPAST 
+		@1PL. 
+
+dolen V * @(PRED dolen) "hidden"
+		@VPAST 
+		@(PART past) 
+		@(NUM sg). 
+		
+dolin V * @(PRED dolen) 
+		@VPAST 
+		@(PART past) 
+		@(NUM pl). 
+		
+maethar V * @(TRANS maetha) 
+		@VPRES 
+		@3PL. 
+
+"adjectives" 
+
+galen A * @(PRED calen) 
+		@(NUM sg). "green" "soft mutation"
+		
+gelin A * @(PRED calen) 
+		@(NUM pl). "soft mutation"
+
+daer A * @(PRED daer)
+		@(NUM sg). "great" "no mutation"
+
+dínen A * @(PRED dínen)
+		"@(NUM sg)". "silent" "no mutation" 
+
+dur A * @(PRED dûr)
+		@(NUM sg). "dark" "no mutation"
+
+duir A * @(PRED dûr)
+		@(NUM pl). 
+
+govannen A * @(PRED govannen) 
+		@(NUM sg). "met"
+		
+ring A * @(PRED ring) 
+		@(NUM sg). "cold" 
+
+"adverbs" 
+
+mae ADV * @(PRED mae). "well" 
+
+annan ADV * @(PRED annan). "long, for a long time"  
+
+him ADV * @(PRED him). "continually" 
+
+
+"prepositions" 
+
+ad P * @(PREP ad). "against" "+soft mutation"
+
+adel P * @(PREP adel). "behind" "+soft mutation"
+
+am P * @(PREP am). "upon, up, above" "+soft mutation" 
+
+an P * @(PREP an). "for, to" "+nasal mutation" 
+
+dad P * @(PREP dad). "down" "+soft mutation" 
+
+ed P * @(PREP ed). "from, out from, out of" "+stop mutation"
+
+na P * @(PREP na). "to, toward, at, with, by" "locative or instrumental" "+soft mutation"
+
+sui P * @(PREP sui). "like, as"
+
+dan P * @(PREP dan). "against" "+nasal mutation"
+
+
+"determiners" 
+
+i 	DET *  (^DEF) = +
+		{@(NUM sg) | @(NUM pl)}.
+
+in DET * (^DEF) = +
+		@(NUM pl). "used with vocals as initial sounds"
+
+----
